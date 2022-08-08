@@ -1,7 +1,7 @@
 import { FaSave } from "react-icons/fa";
 import Button from "../components/Button";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
@@ -15,11 +15,19 @@ export default function Home() {
       },
       body: JSON.stringify({ text: text }),
     });
-    if (response.status === 500) {
-      router.push(`/ServerError`);
+    if (response.status === 400) {
+      Router.push({
+        pathname: "/code",
+        query: { code: "400 Bad Request", explanation: "No text entered." },
+      });
+    } else if (response.status === 500) {
+      Router.push({
+        pathname: "code",
+      });
+    } else {
+      const data = await response.json();
+      router.push(`/${data.id}`);
     }
-    const data = await response.json();
-    router.push(`/${data.id}`);
   }
   return (
     <div className="h-5/6">

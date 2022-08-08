@@ -10,6 +10,7 @@ export default function Id() {
   const [text, setText] = useState();
   const [date, setDate] = useState();
   const [localeDate, setLocaleDate] = useState();
+  const [url, setUrl] = useState("https://pasteque.cf/");
 
   const [copyIcon, setCopyIcon] = useState(
     <FaCopy className="inline text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,1)]" />
@@ -64,11 +65,19 @@ export default function Id() {
   }
 
   function copyLink() {
-    navigator.clipboard.writeText(`https://pasteque.cf/${id}`);
+    navigator.clipboard.writeText(`${url}${id}`);
     setCopyIconLink(<FaCheck className="inline ml-2" />);
     setTimeout(() => {
       setCopyIconLink(<FaCopy className="inline ml-2" />);
     }, 1500);
+  }
+
+  function changeUrl() {
+    if (url === "https://pasteque.cf/") {
+      setUrl("https://pastex.ga/");
+    } else {
+      setUrl("https://pasteque.cf/");
+    }
   }
 
   return (
@@ -78,7 +87,10 @@ export default function Id() {
         <button onClick={copyId}>{copyIconId}</button>
       </h1>
       <h2 className="text-center mt-2">
-        https://pasteque.cf/{id}
+        <span className="hover:underline cursor-pointer" onClick={changeUrl}>
+          {url}
+          {id}
+        </span>
         <button onClick={copyLink}>{copyIconLink}</button>
       </h2>
       <h2 className="text-center mt-2">
@@ -86,7 +98,7 @@ export default function Id() {
         <span className="blur-sm hover:blur-none">{localeDate}</span>
       </h2>
       <textarea
-        className="w-full h-5/6 lg:h-1/6 text-black rounded border-none mt-5 p-2"
+        className="w-full h-4/6 text-black rounded border-none mt-5 p-2"
         value={text}
         readOnly
       />
