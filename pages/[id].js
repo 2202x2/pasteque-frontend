@@ -24,7 +24,7 @@ export default function Id() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://192.168.1.27:8001/v1/search/${id}`);
+      const response = await fetch(`http://192.168.1.27:8000/v1/search/${id}`);
       if (response.status === 404) {
         router.push("/404");
       } else {
