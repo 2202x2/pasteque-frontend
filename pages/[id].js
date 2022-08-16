@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { FaCopy, FaCheck } from "react-icons/fa";
+import Head from "next/head";
 
 export default function Id() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function Id() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://192.168.1.27:8000/v1/search/${id}`);
+      const response = await fetch(`https://api.pasteque.cf/v1/search/${id}`);
       if (response.status === 404) {
         router.push("/404");
       } else {
@@ -74,40 +75,45 @@ export default function Id() {
 
   function changeUrl() {
     if (url === "https://pasteque.cf/") {
-      setUrl("https://pastex.ga/");
+      setUrl("https://pstq.ga/");
     } else {
       setUrl("https://pasteque.cf/");
     }
   }
 
   return (
-    <div className="h-5/6">
-      <h1 className="font-bold text-4xl text-center">
-        {id}
-        <button onClick={copyId}>{copyIconId}</button>
-      </h1>
-      <h2 className="text-center mt-2">
-        <span className="hover:underline cursor-pointer" onClick={changeUrl}>
-          {url}
+    <>
+      <Head>
+        <title>Pastèque - {id}</title>
+      </Head>
+      <div className="h-5/6">
+        <h1 className="font-bold text-4xl text-center">
           {id}
-        </span>
-        <button onClick={copyLink}>{copyIconLink}</button>
-      </h2>
-      <h2 className="text-center mt-2">
-        Uploaded on{" "}
-        <span className="blur-sm hover:blur-none">{localeDate}</span>
-      </h2>
-      <textarea
-        className="w-full h-4/6 text-black rounded border-none mt-5 p-2"
-        value={text}
-        readOnly
-      />
-      <Button
-        className="bg-green-600 p-2 rounded-md drop-shadow-lg button-text-shadow mt-2 mx-auto w-1/2 hover:w-full transition-all ease-in-out duration-300 flex justify-center items-center"
-        text="Copy"
-        icon={copyIcon}
-        onClick={copyText}
-      />
-    </div>
+          <button onClick={copyId}>{copyIconId}</button>
+        </h1>
+        <h2 className="text-center mt-2">
+          <span className="hover:underline cursor-pointer" onClick={changeUrl}>
+            {url}
+            {id}
+          </span>
+          <button onClick={copyLink}>{copyIconLink}</button>
+        </h2>
+        <h2 className="text-center mt-2">
+          Uploaded on{" "}
+          <span className="blur-sm hover:blur-none">{localeDate}</span>
+        </h2>
+        <textarea
+          className="w-full h-4/6 text-black rounded border-none mt-5 p-2"
+          value={text}
+          readOnly
+        />
+        <Button
+          className="bg-green-600 p-2 rounded-md drop-shadow-lg button-text-shadow mt-2 mx-auto w-1/2 hover:w-full transition-all ease-in-out duration-300 flex justify-center items-center"
+          text="Copy"
+          icon={copyIcon}
+          onClick={copyText}
+        />
+      </div>
+    </>
   );
 }
