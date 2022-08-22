@@ -1,4 +1,5 @@
 import { FaSave } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Button from "../components/Button";
 import { useState } from "react";
 import Router, { useRouter } from "next/router";
@@ -10,7 +11,14 @@ export default function Home() {
   const [text, setText] = useState();
   const [errorText, setErrorText] = useState();
 
+  const [icon, setIcon] = useState(
+    <FaSave className="inline text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,1)]" />
+  );
+
   async function saveText() {
+    setIcon(
+      <AiOutlineLoading3Quarters className="inline text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,1)]" />
+    );
     if (text === undefined || text === "" || text === " ") {
       Router.push({
         pathname: "/code",
@@ -76,9 +84,7 @@ export default function Home() {
         <Button
           className="bg-green-600 p-2 rounded-md drop-shadow-lg button-text-shadow mt-2 mx-auto w-1/2 hover:w-full transition-all ease-in-out duration-300 flex justify-center items-center"
           text="Save"
-          icon={
-            <FaSave className="inline text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,1)]" />
-          }
+          icon={icon}
           onClick={saveText}
         />
       </div>
