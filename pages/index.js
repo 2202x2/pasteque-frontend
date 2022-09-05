@@ -49,16 +49,19 @@ export default function Home() {
     }
   }
 
+  // TODO: please fix
+
   function changeText(t) {
+    var maxLength = 10240;
     if (text === undefined || text === "") {
-      if (t.length >= 2048) {
-        setErrorText("Text is superior to 2048 characters.");
+      if (t.length >= maxLength) {
+        setErrorText(`Text is superior to ${maxLength} characters.`);
       } else {
         setErrorText("");
         setText(t);
       }
-    } else if (text.length >= 2048) {
-      setErrorText("Text is superior to 2048 characters.");
+    } else if (text.length >= maxLength) {
+      setErrorText(`Text is superior to ${maxLength} characters.`);
     } else {
       setErrorText("");
       setText(t);
